@@ -5,6 +5,10 @@ import Login from '../pages/Login'
 import PublicRoutes from './PublicRoutes'
 import Index from '../pages/admin/Index'
 import PrivateRoutes from './PrivateRoutes'
+import Profile from '../pages/admin/Profile'
+import Users from '../pages/admin/Users'
+import Teams from '../pages/admin/Teams'
+import Reports from '../pages/admin/Reports'
 
 const AppRouter = () => {
 	return (
@@ -16,6 +20,10 @@ const AppRouter = () => {
 
 			<Route path='/admin' element={<PrivateRoutes />}>
 				<Route path={routesName.admin.index} element={<Index />} />
+				<Route path={routesName.admin.profile} element={<Profile />} />
+				<Route path={routesName.admin.reports} element={<Reports />} />
+				<Route path={routesName.admin.users} element={<Users />} />
+				<Route path={routesName.admin.team} element={<Teams />} />
 			</Route>
 		</Routes>
 	)

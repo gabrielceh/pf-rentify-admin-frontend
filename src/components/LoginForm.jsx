@@ -2,8 +2,19 @@ import { useForm } from 'react-hook-form'
 import { emailRegex, passRegex } from '../utils/regular_expresions'
 import Input from './inputs/Input'
 import Errors from './inputs/Errors'
+import { useDispatch, useSelector } from 'react-redux'
+import { loginAdmin } from '../app/features/user/userSlice'
+import { useContext, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { routesName } from '../utils/routes_name'
+import Loader from './Loader'
+import { ToastContext } from '../context/ToastContext'
 
 const LoginForm = () => {
+	const { addToast } = useContext(ToastContext)
+	const dispatch = useDispatch()
+	const userState = useSelector((state) => state.user)
+	const navigate = useNavigate()
 	const {
 		register,
 		handleSubmit,
@@ -13,8 +24,21 @@ const LoginForm = () => {
 		password: '',
 	})
 
+	useEffect(() => {
+		if (userState.status === 'success') {
+			navigate(routesName.admin.index, { replace: true })
+		}
+		if (userState.status === 'error') {
+			addToast({
+				title: 'Error',
+				description: userState.error,
+				type: 'danger',
+			})
+		}
+	}, [userState.status])
+
 	const submitForm = (data) => {
-		console.log(data)
+		dispatch(loginAdmin(data))
 	}
 
 	return (
@@ -46,8 +70,12 @@ const LoginForm = () => {
 
 			<button
 				type='submit'
-				className='w-full bg-dark_purple text-white px-8 py-2 rounded-md mt-3 hover:bg-medium_purple active:scale-95 transition'>
-				Login
+				className='w-full bg-dark_purple text-white text-center px-8 py-2 rounded-md mt-3 hover:bg-medium_purple active:scale-95 transition'>
+				{userState.status === 'loading' ? (
+					<Loader className='w-4 h-4 stroke-light_purple animate-spin inline' />
+				) : (
+					'Login'
+				)}
 			</button>
 		</form>
 	)
