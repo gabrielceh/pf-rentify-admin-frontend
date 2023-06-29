@@ -1,14 +1,14 @@
 import { useForm } from 'react-hook-form'
 import { emailRegex, passRegex } from '../utils/regular_expresions'
-import Input from './inputs/Input'
-import Errors from './inputs/Errors'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginAdmin } from '../app/features/user/userSlice'
 import { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { routesName } from '../utils/routes_name'
-import Loader from './Loader'
 import { ToastContext } from '../context/ToastContext'
+import Loader from './Loader'
+import Input from './inputs/Input'
+import Errors from './inputs/Errors'
 
 const LoginForm = () => {
 	const { addToast } = useContext(ToastContext)

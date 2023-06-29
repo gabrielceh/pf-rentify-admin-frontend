@@ -11,7 +11,7 @@ import {
 	YAxis,
 } from 'recharts'
 
-const BarChartUsers = ({ data, dataKey, bars, title }) => {
+const BarChartData = ({ data, dataKey, bars, title }) => {
 	return (
 		<>
 			<div className='mb-8'>
@@ -33,4 +33,4 @@ const BarChartUsers = ({ data, dataKey, bars, title }) => {
 	)
 }
 
-export default BarChartUsers
+export default BarChartData

@@ -17,14 +17,14 @@ const AdminAside = ({ isOpen, closeModal }) => {
 	return (
 		<div>
 			<div
-				className={`min-h-full flex justify-end items-start p-4 w-full fixed z-20 bg-modal_bg_50 top-0 left-0 md:opacity-0 md:invisible ${modalOpenClasses} backdrop-blur transition-opacity`}
+				className={`min-h-full flex justify-end items-start p-4 w-full fixed z-50 bg-modal_bg_80 top-0 left-0 md:opacity-0 md:invisible ${modalOpenClasses} backdrop-blur transition-opacity`}
 				onClick={closeModal}>
 				<button onClick={closeModal}>
 					<CloseIcon className='stroke-white' />
 				</button>
 			</div>
 			<aside
-				className={`flex flex-col justify-start items-center gap-8 h-full w-60 p-4 pb-20 fixed z-20 bg-dark_purple md:left-0 ${menuOpenClasses} transition-all overflow-auto scrollbar-thin scrollbar-thumb-light_purple scrollbar-thumb-rounded-md`}>
+				className={`flex flex-col justify-start items-center gap-8 h-full w-60 p-4 pb-20 fixed z-50 bg-dark_purple md:left-0 ${menuOpenClasses} transition-all overflow-auto scrollbar-thin scrollbar-thumb-light_purple scrollbar-thumb-rounded-md`}>
 				<Link to={routesName.admin.index} className='grid place-content-center'>
 					<img src={logoWhite} alt='rentify-logo' />
 				</Link>

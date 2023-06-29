@@ -1,12 +1,12 @@
 import AppRouter from './routes/AppRouter'
 import { useContext, useEffect } from 'react'
 import { ToastContext } from './context/ToastContext'
-import Toast from './components/Toast/Toast'
 import { LSVariables } from './utils/LSVariables'
 import { useDispatch } from 'react-redux'
 import { resetUser, setUser } from './app/features/user/userSlice'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './firebase.config'
+import Toast from './components/Toast/Toast'
 
 const userAuth = localStorage.getItem(LSVariables.authAdmin)
 	? JSON.parse(localStorage.getItem(LSVariables.authAdmin))
