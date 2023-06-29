@@ -52,7 +52,7 @@ Created_at: ${date},
 	return (
 		<>
 			<tr className='shadow hover:bg-white dark:hover:bg-card_dark cursor-pointer'>
-				<td className='py-4'>
+				<td className='py-4 pl-2 min-w-[150px] max-w-[200px] md:max-w-[250px] md:min-w-[200px] truncate'>
 					<div className='flex items-center gap-3'>
 						<img
 							src={imgValid ? user.image : imgNotFound}
@@ -62,15 +62,15 @@ Created_at: ${date},
 
 						<div className='truncate'>
 							<h4 className='text-xl capitalize truncate'>{user.name}</h4>
-							<p>{user.email}</p>
+							<p className='text-sm md:text-base truncate'>{user.email}</p>
 						</div>
 					</div>
 				</td>
 
 				<td>
-					<div className='flex items-center h-full'>{date}</div>
+					<div className='flex items-center h-full text-sm md:text-base'>{date}</div>
 				</td>
-				<td className='capitalize'>{user.membership}</td>
+				<td className='capitalize text-sm md:text-base'>{user.membership}</td>
 				<td>
 					<span className={`capitalize text-xs px-2 py-1 rounded-md ${statusColors[user.status]}`}>
 						{user.status}

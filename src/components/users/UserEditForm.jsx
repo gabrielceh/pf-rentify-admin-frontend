@@ -1,12 +1,16 @@
 /* eslint-disable react/prop-types */
 import { useForm } from 'react-hook-form'
 import Select from '../inputs/Select'
+import { useDispatch } from 'react-redux'
+import { updateUserStatus } from '../../app/features/users/usersSlice'
 
 const UserEditForm = ({ idUser, status, options }) => {
 	const { control, handleSubmit } = useForm()
+	const dispatch = useDispatch()
 
 	const onsubmit = (data) => {
 		console.log({ ...data, idUser })
+		dispatch(updateUserStatus({ ...data, idUser }))
 	}
 
 	return (

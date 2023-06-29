@@ -26,14 +26,14 @@ const UsersEditModal = ({ user, closeModal }) => {
 					className='absolute right-4 bg-dark_purple hover:bg-medium_purple px-2 py-1 rounded'>
 					<CloseIcon className='stroke-white' />
 				</button>
-				<div className='w-10/12 mx-auto py-8 truncate flex flex-col items-center gap-3 text-center'>
+				<div className='w-10/12 mx-auto py-8 truncate flex flex-col items-center gap-3'>
 					<img
 						src={imgValid ? user.image : imgNotFound}
 						alt={user.name}
 						className='w-24 h-24 rounded-full'
 					/>
-					<h2 className='text-2xl md:text-4xl truncate'>ID: {user.idUser}</h2>
-					<h3 className='text-xl md:text-2xl truncate'>{user.name}</h3>
+					<h2 className='text-base'>ID: {user.idUser}</h2>
+					<h3 className='text-xl truncate'>{user.name}</h3>
 					<p className='text-gray_dark'>{user.email}</p>
 
 					<UserEditForm idUser={user.idUser} status={user.status} options={statusOptions} />
