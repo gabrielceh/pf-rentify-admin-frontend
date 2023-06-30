@@ -3,6 +3,7 @@ import { REPORTS_API } from '../utils/apiRoutes'
 
 export const getReportsFromDB = async () => {
 	const { data } = await axios.get(REPORTS_API)
+	console.log(data)
 
 	return data
 }

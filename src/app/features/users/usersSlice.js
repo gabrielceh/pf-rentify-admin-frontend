@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { getUsersListDB, searchUserDB, updateStatusDB } from '../../../services/usersService'
+import { USERS_API } from '../../../utils/apiRoutes'
 
 const initialState = {
 	users: [],
@@ -7,18 +8,15 @@ const initialState = {
 		status: '',
 		membership: '',
 	},
-	pagination: {
-		offset: 0,
-		limit: 20,
-	},
-	endpoint: '',
+	next: null,
+	endpoint: `${USERS_API}/all`,
 	status: 'idle',
 	error: null,
 }
 
-export const getUsersList = createAsyncThunk('users/getUsersList', async () => {
+export const getUsersList = createAsyncThunk('users/getUsersList', async (url) => {
 	try {
-		return await getUsersListDB()
+		return await getUsersListDB(url)
 	} catch (error) {
 		return Promise.reject(error)
 	}
@@ -44,10 +42,22 @@ export const searchUser = createAsyncThunk('users/searchUser', async (search) =>
 	}
 })
 
+export const getUsersNextList = createAsyncThunk('users/getUsersNextList', async (url) => {
+	try {
+		return await getUsersListDB(url)
+	} catch (error) {
+		return Promise.reject(error)
+	}
+})
+
 const usersSlice = createSlice({
 	name: 'users',
 	initialState,
-	reducers: {},
+	reducers: {
+		setEnpoint: (state, action) => {
+			state.endpoint = action.payload
+		},
+	},
 	extraReducers: (builder) => {
 		builder
 			// GET ALL USERS
@@ -56,7 +66,8 @@ const usersSlice = createSlice({
 			})
 			.addCase(getUsersList.fulfilled, (state, action) => {
 				state.status = 'success'
-				state.users = action.payload
+				state.users = action.payload.results || action.payload
+				state.next = action.payload.next || null
 			})
 			.addCase(getUsersList.rejected, (state, action) => {
 				state.status = 'error'
@@ -82,13 +93,31 @@ const usersSlice = createSlice({
 			})
 			.addCase(searchUser.fulfilled, (state, action) => {
 				state.status = 'success'
-				state.users = action.payload
+				state.users = action.payload.results || action.payload
+				state.next = action.payload.next || null
 			})
 			.addCase(searchUser.rejected, (state, action) => {
+				state.status = 'error'
+				state.error = action.payload
+			})
+			// NEXT
+			.addCase(getUsersNextList.pending, (state) => {
+				state.status = 'loading'
+			})
+			.addCase(getUsersNextList.fulfilled, (state, action) => {
+				state.status = 'success'
+				state.users = [...state.users, ...action.payload.results] || [
+					...state.users,
+					...action.payload,
+				]
+				state.next = action.payload.next || null
+			})
+			.addCase(getUsersNextList.rejected, (state, action) => {
 				state.status = 'error'
 				state.error = action.payload
 			})
 	},
 })
 
+export const { setEnpoint } = usersSlice.actions
 export default usersSlice.reducer

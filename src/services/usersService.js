@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { USERS_API } from '../utils/apiRoutes'
 
-export const getUsersListDB = async () => {
-	const { data } = await axios.get(`${USERS_API}/all`)
+export const getUsersListDB = async (url) => {
+	const { data } = await axios.get(url)
 	return data
 }
 

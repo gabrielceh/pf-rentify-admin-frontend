@@ -2,15 +2,13 @@
 import { useForm } from 'react-hook-form'
 import Select from '../inputs/Select'
 import { useDispatch } from 'react-redux'
-import { updateUserStatus } from '../../app/features/users/usersSlice'
 
-const UserEditForm = ({ idUser, status, options }) => {
+const UserEditForm = ({ idUser, status, options, updateFunc }) => {
 	const { control, handleSubmit } = useForm()
 	const dispatch = useDispatch()
 
 	const onsubmit = (data) => {
-		console.log({ ...data, idUser })
-		dispatch(updateUserStatus({ ...data, idUser }))
+		dispatch(updateFunc({ ...data, idUser }))
 	}
 
 	return (
@@ -27,7 +25,7 @@ const UserEditForm = ({ idUser, status, options }) => {
 			<button
 				type='submit'
 				className='bg-dark_purple hover:bg-medium_purple text-white px-4 py-1 rounded-md'>
-				Edit
+				Edit Status
 			</button>
 		</form>
 	)

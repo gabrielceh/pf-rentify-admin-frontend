@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 const SectionDescription = ({ description }) => {
 	return (
-		<section>
-			<p>{description}</p>
-		</section>
+		<div>
+			<p className='text-sm font-bold'>{description}</p>
+		</div>
 	)
 }
 

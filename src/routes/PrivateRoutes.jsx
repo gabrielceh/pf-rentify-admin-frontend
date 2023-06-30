@@ -18,7 +18,7 @@ const PrivateRoutes = () => {
 			? JSON.parse(localStorage.getItem(LSVariables.authAdmin))
 			: { loggin: false, user: {} }
 
-		if (userAuth.user?.role === 'user') {
+		if (userAuth.user?.role === 'user' || userAuth.user.status === 'banned') {
 			dispatch(logoutAdmin())
 			navigate(routesName.home)
 			addToast({

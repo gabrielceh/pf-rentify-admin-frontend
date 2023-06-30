@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getReport } from '../../app/features/reports/reportSlice'
-import BarChart from '../../components/reports/barCharts/BarChartData'
 import TitleSection from '../../components/TitleSection'
 import BtnSelectReports from '../../components/reports/BtnSelectReports'
 import BarChartsDataContainer from '../../components/reports/BarChartsDataContainer'
@@ -15,9 +14,7 @@ const Reports = () => {
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		if (!reportState.data.users.length) {
-			updateData()
-		}
+		updateData()
 	}, [])
 
 	useEffect(() => {

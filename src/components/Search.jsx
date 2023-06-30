@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
 import { useForm } from 'react-hook-form'
 import SearchIcon from './icons/SearchIcon'
 import { useDispatch } from 'react-redux'
@@ -28,7 +27,7 @@ const Search = ({ searchFunction }) => {
 	}
 
 	return (
-		<form onSubmit={handleSubmit(handleSearch)} className='w-full'>
+		<form onSubmit={handleSubmit(handleSearch)} className='w-full md:w-1/2'>
 			<div className='flex md:justify-end gap-2'>
 				<div className='flex items-center gap-2 w-10/12'>
 					<SearchIcon className='stroke-gray_dark' />

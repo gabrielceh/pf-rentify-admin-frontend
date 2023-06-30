@@ -6,6 +6,9 @@ const initialState = {
 		'users': [],
 		'products': [],
 		'user-membership': [],
+		'products-featured': [],
+		'orders': [],
+		'suscriptions': [],
 	},
 	status: 'idle',
 	error: null,
@@ -30,6 +33,9 @@ const reportSlice = createSlice({
 			state.data.users = payload.users
 			state.data.products = payload.products
 			state.data['user-membership'] = payload['user-membership']
+			state.data['products-featured'] = payload['products-featured']
+			state.data.orders = payload.orders
+			state.data.suscriptions = payload.suscriptions
 			state['status'] = 'success'
 		})
 		builder.addCase(getReport.rejected, (state, action) => {

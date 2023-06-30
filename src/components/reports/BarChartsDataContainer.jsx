@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
+import { barchartcoptions } from '../../utils/barchartVariables'
 import BarChartData from './barCharts/BarChartData'
 
 const BarChartsDataContainer = ({ labelData, dataShow }) => {
 	return (
 		<div>
-			{labelData === 'users' && (
+			{labelData === barchartcoptions.users && (
 				<BarChartData
 					data={dataShow}
 					dataKey='name'
@@ -12,7 +13,7 @@ const BarChartsDataContainer = ({ labelData, dataShow }) => {
 					title='Users Status'
 				/>
 			)}
-			{labelData === 'user-membership' && (
+			{labelData === barchartcoptions['user-membership'] && (
 				<BarChartData
 					data={dataShow}
 					dataKey='name'
@@ -25,11 +26,35 @@ const BarChartsDataContainer = ({ labelData, dataShow }) => {
 					]}
 				/>
 			)}
-			{labelData === 'products' && (
+			{labelData === barchartcoptions.products && (
 				<BarChartData
 					data={dataShow}
 					dataKey='name'
 					title='Products'
+					bars={[{ name: 'total', color: '#1cb891' }]}
+				/>
+			)}
+			{labelData === barchartcoptions.suscriptions && (
+				<BarChartData
+					data={dataShow}
+					dataKey='name'
+					title='Suscriptions'
+					bars={[{ name: 'total', color: '#1cb891' }]}
+				/>
+			)}
+			{labelData === barchartcoptions['products-featured'] && (
+				<BarChartData
+					data={dataShow}
+					dataKey='name'
+					title='Products Featured'
+					bars={[{ name: 'total', color: '#1cb891' }]}
+				/>
+			)}
+			{labelData === barchartcoptions.orders && (
+				<BarChartData
+					data={dataShow}
+					dataKey='name'
+					title='Products Featured'
 					bars={[{ name: 'total', color: '#1cb891' }]}
 				/>
 			)}

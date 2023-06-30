@@ -4,10 +4,12 @@ import { formatDate } from '../../utils/formatDate'
 import { statusColors } from '../../utils/statusColors'
 import { useModal } from '../../hooks/useModal'
 import { ToastContext } from '../../context/ToastContext'
-import imgNotFound from '../../assets/image/image-not-found.jpg'
-import UsersEditModal from '../users/UsersEditModal'
-import CopyIcon from '../icons/CopyIcon'
 import { copyText } from '../../utils/copyText'
+import imgNotFound from '../../assets/image/image-not-found.jpg'
+import EditModal from '../EditModal'
+import CopyIcon from '../icons/CopyIcon'
+import UserEditForm from '../users/UserEditForm'
+import { updateUserStatus } from '../../app/features/users/usersSlice'
 
 /* eslint-disable react/prop-types */
 const RowUser = ({ user }) => {
@@ -15,6 +17,12 @@ const RowUser = ({ user }) => {
 	const [date, setDate] = useState('')
 	const [isOpenEditModal, openEditModal, closeEditModal] = useModal()
 	const { addToast } = useContext(ToastContext)
+
+	const statusOptions = [
+		{ label: 'Active', value: 'active' },
+		{ label: 'Inactive', value: 'inactive' },
+		{ label: 'Banned', value: 'banned' },
+	]
 
 	useEffect(() => {
 		isImgValid(user.image, setImgValid)
@@ -82,7 +90,16 @@ Created_at: ${date},
 						onClick={openEditModal}>
 						Edit
 					</button>
-					{isOpenEditModal && <UsersEditModal user={user} closeModal={closeEditModal} />}
+					{isOpenEditModal && (
+						<EditModal user={user} closeModal={closeEditModal}>
+							<UserEditForm
+								idUser={user.idUser}
+								status={user.status}
+								options={statusOptions}
+								updateFunc={updateUserStatus}
+							/>
+						</EditModal>
+					)}
 				</td>
 				<td>
 					<button

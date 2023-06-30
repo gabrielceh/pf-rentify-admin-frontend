@@ -14,9 +14,16 @@ const MenuUser = ({ close }) => {
 		navigate(routesName.login, { replace: true })
 	}
 
+	const handleNavProfile = () => {
+		close()
+		navigate(routesName.admin.profile)
+	}
+
 	return (
 		<div className='absolute top-16 right-3 w-28 bg-white dark:bg-card_dark rounded-md overflow-hidden shadow-md transition-colors'>
-			<button className='w-full px-2 py-3 hover:bg-medium_purple hover:text-white cursor-pointer transition-colors'>
+			<button
+				onClick={handleNavProfile}
+				className='w-full px-2 py-3 hover:bg-medium_purple hover:text-white cursor-pointer transition-colors'>
 				Your profile
 			</button>
 			<button
