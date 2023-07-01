@@ -11,7 +11,7 @@ export const updateStatusDB = async ({ idUser, status }) => {
 }
 
 export const searchUserDB = async (search) => {
-	const { data } = await axios.get(`${USERS_API}/name?name=${search}`)
+	const { data } = await axios.get(`${USERS_API}/all?search=${search}`)
 
 	return data
 }

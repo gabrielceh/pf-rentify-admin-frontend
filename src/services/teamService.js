@@ -10,7 +10,7 @@ export const getAllAdminsDB = async (url) => {
 }
 
 export const searchAdminByNameDB = async (name) => {
-	const { data } = await axios.get(`${ADMIN_API}/admins-sudo/?name=${name}`)
+	const { data } = await axios.get(`${ADMIN_API}/admins-sudo/?search=${name}`)
 	return data
 }
 

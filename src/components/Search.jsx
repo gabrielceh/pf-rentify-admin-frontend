@@ -13,9 +13,7 @@ const Search = ({ searchFunction }) => {
 	const dispatch = useDispatch()
 
 	const debounceFunc = debounce((value) => {
-		if (value.trim()) {
-			dispatch(searchFunction(value))
-		}
+		dispatch(searchFunction(value))
 	}, 500)
 
 	const handleSearch = (data) => {
