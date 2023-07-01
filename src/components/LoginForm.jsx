@@ -6,8 +6,9 @@ import { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { routesName } from '../utils/routes_name'
 import { ToastContext } from '../context/ToastContext'
-import Loader from './Loader'
+// import Loader from './Loader'
 import Errors from './inputs/Errors'
+import BtnSubmitForms from './BtnSubmitForms'
 
 const LoginForm = () => {
 	const { addToast } = useContext(ToastContext)
@@ -83,7 +84,7 @@ const LoginForm = () => {
 				</div>
 			</div>
 
-			<button
+			{/* <button
 				type='submit'
 				className='w-full bg-dark_purple text-white text-center px-8 py-2 rounded-md mt-3 hover:bg-medium_purple active:scale-95 transition'>
 				{userState.status === 'loading' ? (
@@ -91,7 +92,8 @@ const LoginForm = () => {
 				) : (
 					'Login'
 				)}
-			</button>
+			</button> */}
+			<BtnSubmitForms loadingStatus={userState.status} label='Login' />
 		</form>
 	)
 }

@@ -1,0 +1,10 @@
+.react-calendar {
+	background-color: transparent;
+	border-radius: 20px;
+	border: 1px solid #ccc;
+	padding: 1rem;
+	box-shadow: 0 0 20px rgba(20, 20, 20, 0.2);
+	min-width: 330px;
+	max-width: 500px;
+	width: 100%;
+}

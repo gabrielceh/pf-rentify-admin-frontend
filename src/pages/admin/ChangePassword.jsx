@@ -1,15 +1,17 @@
+import { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { passRegex } from '../../utils/regular_expresions'
 import { changePassword } from '../../services/authService'
 import { ToastContext } from '../../context/ToastContext'
+import { firebaseErrors } from '../../utils/firebaseErrors'
 import TitleSection from '../../components/TitleSection'
 import Errors from '../../components/inputs/Errors'
 import Input from '../../components/inputs/Input'
-import { useContext } from 'react'
-import { firebaseErrors } from '../../utils/firebaseErrors'
+import BtnSubmitForms from '../../components/BtnSubmitForms'
 
 const ChangePassword = () => {
 	const { addToast } = useContext(ToastContext)
+	const [status, setStatus] = useState('idle')
 	const {
 		handleSubmit,
 		register,
@@ -22,6 +24,7 @@ const ChangePassword = () => {
 	})
 
 	const submit = async (data) => {
+		setStatus('loading')
 		try {
 			const isChange = await changePassword({
 				oldpassword: data.oldpassword,
@@ -34,8 +37,10 @@ const ChangePassword = () => {
 					type: 'success',
 				})
 				reset()
+				setStatus('success')
 			}
 		} catch (error) {
+			setStatus('error')
 			addToast({
 				title: 'Error',
 				description:
@@ -56,7 +61,10 @@ const ChangePassword = () => {
 		<div>
 			<TitleSection title='Change your password' />
 
-			<form action='' onSubmit={handleSubmit(submit)}>
+			<form
+				action=''
+				onSubmit={handleSubmit(submit)}
+				className='bg-white dark:bg-card_dark mt-8 p-8 w-full max-w-[500px] rounded-lg shadow-lg'>
 				<Input
 					label='Old password'
 					type='password'
@@ -101,7 +109,7 @@ const ChangePassword = () => {
 					)}
 				</Input>
 
-				<button type='submit'>Change password</button>
+				<BtnSubmitForms label='Change password' loadingStatus={status} />
 			</form>
 		</div>
 	)
