@@ -4,7 +4,6 @@ import { asideLinks } from '../../utils/asideLinks'
 import { routesName } from '../../utils/routes_name'
 import logoWhite from '../../assets/image/logo-rentify-white.png'
 import CloseIcon from '../icons/CloseIcon'
-import KeyIcon from '../icons/KeyIcon'
 
 const AdminAside = ({ isOpen, closeModal }) => {
 	const modalOpenClasses = isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
@@ -48,9 +47,6 @@ const AdminAside = ({ isOpen, closeModal }) => {
 					<NavLink
 						className={({ isActive }) => (isActive ? activeLink : noActiveLink)}
 						to={routesName.admin.changePassword}>
-						<span className='aside-link-container'>
-							<KeyIcon />
-						</span>
 						<span className=''>Change Password</span>
 					</NavLink>
 				</section>
