@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react'
 import { firebaseErrors } from '../../utils/firebaseErrors'
 import { useDispatch } from 'react-redux'
 import ProfileFormEdit from './ProfileFormEdit'
-import CloseIcon from '../icons/CloseIcon'
-import EditIcon from '../icons/EditICon'
 import BtnEditProfile from './BtnEditProfile'
 
 const ProfileSectionEdit = ({

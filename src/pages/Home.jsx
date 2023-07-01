@@ -18,11 +18,11 @@ const Home = () => {
 	return (
 		<div
 			style={{ backgroundImage: `url("${bgHome}")` }}
-			className='w-full min-h-screen bg-cover bg-center bg-modal_bg_50'>
+			className='blur-in-expand w-full min-h-screen bg-cover bg-center bg-modal_bg_50'>
 			<div className='bg-modal_bg_80 w-full min-h-screen flex flex-col items-center justify-center gap-8'>
 				<figure className='scale-up-top'>
-					<img src={logo} alt='rentify' />
-					Imagen de <figcaption className='text-3xl text-white'>Admin</figcaption>
+					<figcaption className='text-3xl text-white text-center'>Admin</figcaption>
+					<img src={logo} alt='rentify' className='w-[400px]' />
 				</figure>
 
 				{userState.login ? (

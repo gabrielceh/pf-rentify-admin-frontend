@@ -10,6 +10,7 @@ import Users from '../pages/admin/Users'
 import Teams from '../pages/admin/Teams'
 import Reports from '../pages/admin/Reports'
 import UserOrdersDetails from '../pages/admin/UserOrdersDetails'
+import ChangePassword from '../pages/admin/ChangePassword'
 
 const AppRouter = () => {
 	return (
@@ -26,6 +27,7 @@ const AppRouter = () => {
 				<Route path={routesName.admin.users} element={<Users />} />
 				<Route path={routesName.admin.team} element={<Teams />} />
 				<Route path={`${routesName.admin.usersOrders}/:id`} element={<UserOrdersDetails />} />
+				<Route path={routesName.admin.changePassword} element={<ChangePassword />} />
 			</Route>
 		</Routes>
 	)

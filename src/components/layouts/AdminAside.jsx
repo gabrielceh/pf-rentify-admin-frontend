@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 import { Link, NavLink } from 'react-router-dom'
-import logoWhite from '../../assets/image/logo-rentify-white.png'
 import { asideLinks } from '../../utils/asideLinks'
-import CloseIcon from '../icons/CloseIcon'
 import { routesName } from '../../utils/routes_name'
+import logoWhite from '../../assets/image/logo-rentify-white.png'
+import CloseIcon from '../icons/CloseIcon'
+import KeyIcon from '../icons/KeyIcon'
 
 const AdminAside = ({ isOpen, closeModal }) => {
 	const modalOpenClasses = isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
@@ -24,22 +25,35 @@ const AdminAside = ({ isOpen, closeModal }) => {
 				</button>
 			</div>
 			<aside
-				className={`flex flex-col justify-start items-center gap-8 h-full w-60 p-4 pb-20 fixed z-50 bg-dark_purple md:left-0 ${menuOpenClasses} transition-all overflow-auto scrollbar-thin scrollbar-thumb-light_purple scrollbar-thumb-rounded-md`}>
-				<Link to={routesName.admin.index} className='grid place-content-center'>
-					<img src={logoWhite} alt='rentify-logo' />
-				</Link>
+				className={`flex flex-col justify-between items-center gap-8 h-full w-60 p-4 pb-20 fixed z-50 bg-dark_purple md:left-0 ${menuOpenClasses} transition-all overflow-auto scrollbar-thin scrollbar-thumb-light_purple scrollbar-thumb-rounded-md`}>
+				<section className='flex flex-col justify-start items-center gap-8 w-52'>
+					<Link to={routesName.admin.index} className='grid place-content-center'>
+						<img src={logoWhite} alt='rentify-logo' />
+					</Link>
 
-				<div className='w-full flex flex-col gap-2'>
-					{asideLinks.map((link) => (
-						<NavLink
-							key={link.id}
-							to={link.to}
-							className={({ isActive }) => (isActive ? activeLink : noActiveLink)}>
-							<span className='aside-link-container'>{link.icon}</span>
-							<span>{link.name}</span>
-						</NavLink>
-					))}
-				</div>
+					<div className='w-full flex flex-col gap-2'>
+						{asideLinks.map((link) => (
+							<NavLink
+								key={link.id}
+								to={link.to}
+								className={({ isActive }) => (isActive ? activeLink : noActiveLink)}>
+								<span className='aside-link-container'>{link.icon}</span>
+								<span>{link.name}</span>
+							</NavLink>
+						))}
+					</div>
+				</section>
+
+				<section className='flex flex-col justify-start items-start gap-8 2-full w-52'>
+					<NavLink
+						className={({ isActive }) => (isActive ? activeLink : noActiveLink)}
+						to={routesName.admin.changePassword}>
+						<span className='aside-link-container'>
+							<KeyIcon />
+						</span>
+						<span>Change Password</span>
+					</NavLink>
+				</section>
 			</aside>
 		</div>
 	)

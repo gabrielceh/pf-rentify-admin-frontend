@@ -1,9 +1,12 @@
 import axios from 'axios'
 import { auth, storage } from '../firebase.config'
 import {
+	EmailAuthProvider,
 	createUserWithEmailAndPassword,
+	reauthenticateWithCredential,
 	signInWithEmailAndPassword,
 	signOut,
+	updatePassword,
 	updateProfile,
 } from 'firebase/auth'
 import { ADMIN_API, LOGIN_API } from '../utils/apiRoutes'
@@ -86,4 +89,16 @@ export const updatePhoneDB = async ({ phone, idUser }) => {
 	await axios.patch(`${ADMIN_API}/update-phone`, { idUser, phone })
 
 	return phone
+}
+
+export const changePassword = async ({ oldpassword, newpassword }) => {
+	const user = auth.currentUser
+
+	const credential = EmailAuthProvider.credential(user.email, oldpassword)
+
+	await reauthenticateWithCredential(user, credential)
+
+	await updatePassword(auth.currentUser, newpassword)
+
+	return true
 }

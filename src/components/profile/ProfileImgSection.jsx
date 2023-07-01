@@ -7,8 +7,6 @@ import { firebaseErrors } from '../../utils/firebaseErrors'
 import { useDispatch } from 'react-redux'
 import imgNotFound from '../../assets/image/image-not-found.jpg'
 import ProfileFormEdit from './ProfileFormEdit'
-import CloseIcon from '../icons/CloseIcon'
-import EditIcon from '../icons/EditICon'
 import BtnEditProfile from './BtnEditProfile'
 
 const ProfileImgSection = ({ user }) => {

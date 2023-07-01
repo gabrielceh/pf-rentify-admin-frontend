@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom'
 import { routesName } from '../utils/routes_name'
 import { ToastContext } from '../context/ToastContext'
 import Loader from './Loader'
-import Input from './inputs/Input'
 import Errors from './inputs/Errors'
 
 const LoginForm = () => {

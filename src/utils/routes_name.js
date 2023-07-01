@@ -8,5 +8,6 @@ export const routesName = {
 		users: '/admin/users',
 		usersOrders: '/admin/users/order-detail',
 		team: '/admin/team',
+		changePassword: '/admin/change-password',
 	},
 }
