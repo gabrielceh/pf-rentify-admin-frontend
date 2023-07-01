@@ -51,7 +51,7 @@ const AdminAside = ({ isOpen, closeModal }) => {
 						<span className='aside-link-container'>
 							<KeyIcon />
 						</span>
-						<span>Change Password</span>
+						<span className=''>Change Password</span>
 					</NavLink>
 				</section>
 			</aside>
