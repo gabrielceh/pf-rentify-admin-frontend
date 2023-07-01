@@ -1,4 +1,4 @@
-import bgHome from '../assets/image/rentify-home.jpg'
+import bgHome from '../assets/image/rentify-home.png'
 import logo from '../assets/image/logo-rentify-white.png'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
