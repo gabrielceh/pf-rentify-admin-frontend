@@ -21,3 +21,9 @@ export const roleOptions = [
 	{ label: 'Admin', value: 'admin' },
 	{ label: 'Super', value: 'sudo' },
 ]
+
+export const statusOrderOptions = [
+	{ label: 'Approved', value: '?status=approved' },
+	{ label: 'Pending', value: '?status=pending' },
+	{ label: 'Rejected', value: '?status=rejected' },
+]

@@ -8,7 +8,7 @@ import SectionDescription from '../../components/SectionDescription'
 import TitleSection from '../../components/TitleSection'
 import Search from '../../components/Search'
 import BtnRefreshData from '../../components/BtnRefreshData'
-import UserFormFilter from '../../components/users/UserFormFilter'
+import UserFormFilter from '../../components/UserFormFilter'
 import TableUsers from '../../components/tables/TableUsers'
 
 const Users = () => {

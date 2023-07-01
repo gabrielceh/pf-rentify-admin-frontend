@@ -3,7 +3,7 @@ import RowUser from './RowUser'
 
 const TableUsers = ({ users }) => {
 	return (
-		<table className='w-full min-w-[600px]'>
+		<table className='w-full min-w-[700px]'>
 			<thead className='border-b-[1px] border-b-gray_medium'>
 				<tr className='text-left'>
 					<th className='min-w-[150px] max-w-[200px] md:max-w-[250px] md:min-w-[200px] py-2'>
@@ -12,6 +12,7 @@ const TableUsers = ({ users }) => {
 					<th>Created</th>
 					<th>Membership</th>
 					<th>Status</th>
+					<th>Orders</th>
 					<th>Edit</th>
 					<th>Copy</th>
 				</tr>

@@ -54,7 +54,7 @@ const BarChartsDataContainer = ({ labelData, dataShow }) => {
 				<BarChartData
 					data={dataShow}
 					dataKey='name'
-					title='Products Featured'
+					title='Orders'
 					bars={[{ name: 'total', color: '#1cb891' }]}
 				/>
 			)}

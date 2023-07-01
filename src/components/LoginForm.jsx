@@ -46,26 +46,42 @@ const LoginForm = () => {
 			onSubmit={handleSubmit(submitForm)}
 			className='flex flex-col justify-evenly items-center w-full max-w-[384px] md:w-[500px] md:max-w-[600px] h-96 mx-auto px-4 md:px-8 py-8 md:py-12 rounded-lg bg-white'>
 			<div className='w-full flex flex-col gap-4'>
-				<Input
-					type='email'
-					label='Your Email'
-					name='email'
-					placeholder='Ex: john@mail.com'
-					register={register}
-					options={{ required: true, pattern: emailRegex }}>
-					{errors.email?.type === 'required' && <Errors errorMsg='Email is required' />}
-					{errors.email?.type === 'pattern' && <Errors errorMsg='Email is not valid' />}
-				</Input>
+				<div className='flex flex-col gap-2 w-full'>
+					<label htmlFor='email' className='text-gray_dark text-sm'>
+						Your Email
+					</label>
+					<input
+						type='email'
+						id='email'
+						name='email'
+						{...register('email', { required: true, pattern: emailRegex })}
+						placeholder='Ex: john@mail.com'
+						className='w-full p-2 bg-body_light text-card_dark rounded-md border-2 border-gray_medium outline-none focus:outline-2 focus:outline-dark_purple'
+					/>
+					<div>
+						{errors.email?.type === 'required' && <Errors errorMsg='Email is required' />}
+						{errors.email?.type === 'pattern' && <Errors errorMsg='Email is not valid' />}
+					</div>
+				</div>
 
-				<Input
-					type='password'
-					label='Your Password'
-					name='password'
-					register={register}
-					options={{ required: true, pattern: passRegex }}>
-					{errors.password?.type === 'required' && <Errors errorMsg='Password is required' />}
-					{errors.password?.type === 'pattern' && <Errors errorMsg='Password is not valid' />}
-				</Input>
+				<div className='flex flex-col gap-2 w-full'>
+					<label htmlFor='password' className='text-gray_dark text-sm'>
+						Your Password
+					</label>
+					<input
+						type='password'
+						id='password'
+						name='password'
+						{...register('password', { required: true, pattern: passRegex })}
+						className='w-full p-2 bg-body_light text-card_dark rounded-md border-2 border-gray_medium outline-none focus:outline-2 focus:outline-dark_purple'
+					/>
+					<div>
+						{errors.password?.type === 'required' && <Errors errorMsg='Password is required' />}
+						{errors.password?.type === 'pattern' && (
+							<Errors errorMsg='Password is not valid. Min 6 char. One number. One Capital letter' />
+						)}
+					</div>
+				</div>
 			</div>
 
 			<button

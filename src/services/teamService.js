@@ -29,24 +29,6 @@ export const createUserAdminDB = async ({ email, password }) => {
 	return data
 }
 
-export const saveAndGetImageCreate = async (file, uid) => {
-	const metadata = {
-		contentType: file.type,
-		name: uid,
-		size: file.size,
-		customMetadata: {
-			size: file.size,
-			uidUser: uid,
-		},
-	}
-
-	const storageRef = ref(storage, `profiles/${uid}/`)
-	await uploadBytes(storageRef, file)
-	await updateMetadata(storageRef, metadata)
-	let url = await getDownloadURL(storageRef)
-	return url
-}
-
 export const updateStatusAdminDB = async ({ idUser, status }) => {
 	await axios.put(`${USERS_API}/update-status`, { idUser, status })
 }

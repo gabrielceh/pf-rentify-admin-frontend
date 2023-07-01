@@ -10,6 +10,9 @@ import EditModal from '../EditModal'
 import CopyIcon from '../icons/CopyIcon'
 import UserEditForm from '../users/UserEditForm'
 import { updateUserStatus } from '../../app/features/users/usersSlice'
+import EyeOpenIcon from '../icons/EyeOpenIcon'
+import { useNavigate } from 'react-router-dom'
+import { routesName } from '../../utils/routes_name'
 
 /* eslint-disable react/prop-types */
 const RowUser = ({ user }) => {
@@ -17,6 +20,7 @@ const RowUser = ({ user }) => {
 	const [date, setDate] = useState('')
 	const [isOpenEditModal, openEditModal, closeEditModal] = useModal()
 	const { addToast } = useContext(ToastContext)
+	const navigate = useNavigate()
 
 	const statusOptions = [
 		{ label: 'Active', value: 'active' },
@@ -57,16 +61,22 @@ Created_at: ${date},
 		}
 	}
 
+	const handleOrders = (id) => {
+		navigate(`${routesName.admin.usersOrders}/${id}`)
+	}
+
 	return (
 		<>
 			<tr className='shadow hover:bg-white dark:hover:bg-card_dark cursor-pointer'>
 				<td className='py-4 pl-2 min-w-[150px] max-w-[200px] md:max-w-[250px] md:min-w-[200px] truncate'>
 					<div className='flex items-center gap-3'>
-						<img
-							src={imgValid ? user.image : imgNotFound}
-							alt={user.name}
-							className='w-14 h-14 rounded-full'
-						/>
+						<div className='w-14 h14 rounded-full overflow-hidden'>
+							<img
+								src={imgValid ? user.image : imgNotFound}
+								alt={user.name}
+								className='w-14 h-14 rounded-full object-cover'
+							/>
+						</div>
 
 						<div className='truncate'>
 							<h4 className='text-xl capitalize truncate'>{user.name}</h4>
@@ -83,6 +93,13 @@ Created_at: ${date},
 					<span className={`capitalize text-xs px-2 py-1 rounded-md ${statusColors[user.status]}`}>
 						{user.status}
 					</span>
+				</td>
+				<td>
+					<button
+						className='bg-dark_purple text-white px-3 py-1 rounded-md hover:bg-medium_purple transition-colors'
+						onClick={() => handleOrders(user.idUser)}>
+						<EyeOpenIcon className='stroke-white' />
+					</button>
 				</td>
 				<td>
 					<button

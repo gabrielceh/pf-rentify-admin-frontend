@@ -59,11 +59,13 @@ Created_at: ${date},
 			<tr className='shadow hover:bg-white dark:hover:bg-card_dark cursor-pointer'>
 				<td className='py-4 pl-2 min-w-[150px] max-w-[200px] md:max-w-[250px] md:min-w-[200px] truncate'>
 					<div className='flex items-center gap-3'>
-						<img
-							src={imgValid ? user.image : imgNotFound}
-							alt={user.name}
-							className='w-14 h-14 rounded-full'
-						/>
+						<div className='w-14 h14 rounded-full overflow-hidden'>
+							<img
+								src={imgValid ? user.image : imgNotFound}
+								alt={user.name}
+								className='w-14 h-14 rounded-full object-cover'
+							/>
+						</div>
 
 						<div className='truncate'>
 							<h4 className='text-xl capitalize truncate'>{user.name}</h4>

@@ -6,6 +6,7 @@ export const routesName = {
 		profile: '/admin/profile',
 		reports: '/admin/reports',
 		users: '/admin/users',
+		usersOrders: '/admin/users/order-detail',
 		team: '/admin/team',
 	},
 }

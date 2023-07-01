@@ -12,7 +12,7 @@ const BtnUser = () => {
 
 	useEffect(() => {
 		isImgValid(userState.user.image, setImgValid)
-	}, [])
+	}, [userState.user.image])
 
 	const handleClickMenu = () => {
 		if (isOpen) closeMenu()
@@ -25,11 +25,13 @@ const BtnUser = () => {
 				onClick={handleClickMenu}
 				className='flex justify-end items-center gap-2 max-w-[144px] trucate font-bold self-end hover:text-dark_purple dark:hover:text-light_purple'>
 				{imgValid ? (
-					<img
-						src={userState.user.image}
-						alt={userState.user.name}
-						className='w-8 h-8 rounded-full'
-					/>
+					<div className='w-8 h-8 rounded-full overflow-hidden'>
+						<img
+							src={userState.user.image}
+							alt={userState.user.name}
+							className='w-8 h-8 rounded-full object-cover'
+						/>
+					</div>
 				) : (
 					<UserICon className='stroke-dark_purple dark:stroke-light_purple w-8 h-8' />
 				)}

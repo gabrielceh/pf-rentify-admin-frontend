@@ -15,3 +15,15 @@ export const searchUserDB = async (search) => {
 
 	return data
 }
+
+export const getOrdersByUser = async (endpoint) => {
+	const { data } = await axios.get(endpoint)
+
+	return data
+}
+
+export const getUserByIdDB = async (idUser) => {
+	const { data } = await axios.get(`${USERS_API}/${idUser}`)
+
+	return data
+}

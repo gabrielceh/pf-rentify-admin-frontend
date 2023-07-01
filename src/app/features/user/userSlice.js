@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { login, logoutUser } from '../../../services/authService'
+import { login, logoutUser, updateImgDB } from '../../../services/authService'
 import { LSVariables } from '../../../utils/LSVariables'
 import { firebaseErrors } from '../../../utils/firebaseErrors'
 
@@ -36,6 +36,21 @@ export const logoutAdmin = createAsyncThunk('user/logoutAdmin', async () => {
 	}
 })
 
+export const updateImageProfile = createAsyncThunk(
+	'user/updateImageProfile',
+	async ({ file, uid, idUser }) => {
+		try {
+			return await updateImgDB({ file, uid, idUser })
+		} catch (error) {
+			if (error.code.includes('auth/')) {
+				const errorMsg = firebaseErrors(error.code)
+				return Promise.reject(errorMsg)
+			}
+			return Promise.reject(error)
+		}
+	}
+)
+
 const userSlice = createSlice({
 	name: 'user',
 	initialState,
@@ -51,6 +66,18 @@ const userSlice = createSlice({
 			state.status = 'idle'
 			state.error = null
 			localStorage.removeItem(LSVariables.authAdmin)
+		},
+		setImageProfile: (state, action) => {
+			state.user.image = action.payload
+			localStorage.setItem(LSVariables.authAdmin, JSON.stringify({ user: state.user, login: true }))
+		},
+		setNameProfile: (state, action) => {
+			state.user.name = action.payload
+			localStorage.setItem(LSVariables.authAdmin, JSON.stringify({ user: state.user, login: true }))
+		},
+		setPhoneProfile: (state, action) => {
+			state.user.phone = action.payload
+			localStorage.setItem(LSVariables.authAdmin, JSON.stringify({ user: state.user, login: true }))
 		},
 	},
 	extraReducers: (builder) => {
@@ -88,8 +115,22 @@ const userSlice = createSlice({
 				state.status = 'error'
 				state.error = action.error.message
 			})
+			//UPDATE IMAGE
+			.addCase(updateImageProfile.pending, (state) => {
+				state.status = 'loading'
+				state.error = null
+			})
+			.addCase(updateImageProfile.fulfilled, (state, { payload }) => {
+				state.user.image = payload
+				state.status = 'success'
+			})
+			.addCase(updateImageProfile.rejected, (state, action) => {
+				state.status = 'error'
+				state.error = action.error.message
+			})
 	},
 })
 
-export const { resetUser, setUser } = userSlice.actions
+export const { resetUser, setUser, setImageProfile, setNameProfile, setPhoneProfile } =
+	userSlice.actions
 export default userSlice.reducer

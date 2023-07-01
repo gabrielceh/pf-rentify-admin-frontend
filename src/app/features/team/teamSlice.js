@@ -7,6 +7,7 @@ import {
 	updateRolAdminDB,
 	updateStatusAdminDB,
 } from '../../../services/teamService'
+import { firebaseErrors } from '../../../utils/firebaseErrors'
 
 const initialState = {
 	team: [],
@@ -50,7 +51,10 @@ export const createUserAdmin = createAsyncThunk('team/createUserAdmin', async (u
 	try {
 		return await createUserAdminDB(user)
 	} catch (error) {
-		console.log(error)
+		if (error.code.includes('auth/')) {
+			const errorMsg = firebaseErrors(error.code)
+			return Promise.reject(errorMsg)
+		}
 		return Promise.reject(error)
 	}
 })

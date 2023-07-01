@@ -20,7 +20,7 @@ const Home = () => {
 			style={{ backgroundImage: `url("${bgHome}")` }}
 			className='w-full min-h-screen bg-cover bg-center bg-modal_bg_50'>
 			<div className='bg-modal_bg_80 w-full min-h-screen flex flex-col items-center justify-center gap-8'>
-				<figure>
+				<figure className='scale-up-top'>
 					<img src={logo} alt='rentify' />
 					Imagen de <figcaption className='text-3xl text-white'>Admin</figcaption>
 				</figure>
@@ -28,7 +28,7 @@ const Home = () => {
 				{userState.login ? (
 					<button
 						onClick={handleNavAdmin}
-						className='border-2 border-gray_dark px-12 py-2 text-white rounde-md hover:scale-110 transition'>
+						className='scale-up-top border-2 border-gray_dark px-12 py-2 text-white rounde-md hover:scale-110 transition'>
 						Admin
 					</button>
 				) : (

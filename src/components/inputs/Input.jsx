@@ -19,7 +19,7 @@ const Input = ({
 			{...register(name, options)}
 			placeholder={placeholder}
 			defaultValue={defaultValue}
-			className='p-2 bg-body_light rounded-md border-2 border-gray_medium outline-none focus:outline-2 focus:outline-dark_purple'
+			className='w-full p-2 bg-body_light dark:bg-card_dark rounded-md border-2 border-gray_medium outline-none focus:outline-2 focus:outline-dark_purple'
 		/>
 		<div>{children}</div>
 	</div>
