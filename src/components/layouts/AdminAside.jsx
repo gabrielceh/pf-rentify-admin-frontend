@@ -35,7 +35,8 @@ const AdminAside = ({ isOpen, closeModal }) => {
 							<NavLink
 								key={link.id}
 								to={link.to}
-								className={({ isActive }) => (isActive ? activeLink : noActiveLink)}>
+								className={({ isActive }) => (isActive ? activeLink : noActiveLink)}
+								onClick={closeModal}>
 								<span className='aside-link-container'>{link.icon}</span>
 								<span>{link.name}</span>
 							</NavLink>
@@ -46,7 +47,8 @@ const AdminAside = ({ isOpen, closeModal }) => {
 				<section className='flex flex-col justify-start items-start gap-8 2-full w-52'>
 					<NavLink
 						className={({ isActive }) => (isActive ? activeLink : noActiveLink)}
-						to={routesName.admin.changePassword}>
+						to={routesName.admin.changePassword}
+						onClick={closeModal}>
 						<span className=''>Change Password</span>
 					</NavLink>
 				</section>

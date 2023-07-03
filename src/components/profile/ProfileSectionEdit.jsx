@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { firebaseErrors } from '../../utils/firebaseErrors'
 import { useDispatch } from 'react-redux'
 import ProfileFormEdit from './ProfileFormEdit'
 import BtnEditProfile from './BtnEditProfile'
+import { ToastContext } from '../../context/ToastContext'
 
 const ProfileSectionEdit = ({
 	user,
@@ -18,14 +19,24 @@ const ProfileSectionEdit = ({
 	const [statusSend, setStatusSend] = useState('idle')
 	const [errorSend, setErrorSend] = useState(null)
 	const dispatch = useDispatch()
+	const { addToast } = useContext(ToastContext)
 
 	useEffect(() => {
 		if (statusSend === 'success') {
-			console.log(`${valueToModify} was updated`)
+			addToast({
+				title: 'Update',
+				description: `${valueToModify} was updated`,
+				type: 'success',
+			})
 			setShowForm(false)
 		}
 		if (statusSend === 'error') {
-			console.log(errorSend)
+			// console.log(errorSend)
+			addToast({
+				title: 'Error',
+				description: errorSend,
+				type: 'danger',
+			})
 		}
 	}, [statusSend])
 
@@ -36,19 +47,21 @@ const ProfileSectionEdit = ({
 	const submit = async (data) => {
 		setStatusSend('loading')
 		try {
+			// console.log(data)
 			const name = await funcDB(data)
+			// console.log(name)
 			dispatch(funcStateField(name))
 			setStatusSend('success')
 		} catch (error) {
-			console.log(error)
+			// console.log(error)
 			setStatusSend('error')
-			if (error.code.includes('auth/') || error.code.includes('storage/')) {
+			if (error.code?.includes('auth/') || error.code?.includes('storage/')) {
 				const errorMsg = firebaseErrors(error.code)
 				setStatusSend('error')
 				setErrorSend(errorMsg)
 				return
 			}
-			setErrorSend(error.response.data.error)
+			setErrorSend('Error')
 		}
 	}
 

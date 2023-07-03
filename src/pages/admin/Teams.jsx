@@ -24,6 +24,12 @@ const Teams = () => {
 		getAllTeam(`${ADMIN_API}/admins-sudo`)
 	}, [])
 
+	useEffect(() => {
+		if (teamState.status === 'error') {
+			console.log(teamState.error)
+		}
+	}, [teamState.status])
+
 	const getAllTeam = (endpoint) => {
 		dispatch(getTeamList(endpoint))
 	}

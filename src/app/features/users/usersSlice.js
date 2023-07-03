@@ -18,7 +18,10 @@ export const getUsersList = createAsyncThunk('users/getUsersList', async (url) =
 	try {
 		return await getUsersListDB(url)
 	} catch (error) {
-		return Promise.reject(error)
+		if (error.response) {
+			return Promise.reject(error.response.data.error)
+		}
+		return Promise.reject(error.message)
 	}
 })
 
@@ -29,7 +32,10 @@ export const updateUserStatus = createAsyncThunk(
 			await updateStatusDB({ idUser, status })
 			return { idUser, status }
 		} catch (error) {
-			return Promise.reject(error)
+			if (error.response) {
+				return Promise.reject(error.response.data.error)
+			}
+			return Promise.reject(error.message)
 		}
 	}
 )
@@ -38,7 +44,10 @@ export const searchUser = createAsyncThunk('users/searchUser', async (search) =>
 	try {
 		return await searchUserDB(search)
 	} catch (error) {
-		return Promise.reject(error)
+		if (error.response) {
+			return Promise.reject(error.response.data.error)
+		}
+		return Promise.reject(error.message)
 	}
 })
 
@@ -46,7 +55,10 @@ export const getUsersNextList = createAsyncThunk('users/getUsersNextList', async
 	try {
 		return await getUsersListDB(url)
 	} catch (error) {
-		return Promise.reject(error)
+		if (error.response) {
+			return Promise.reject(error.response.data.error)
+		}
+		return Promise.reject(error.message)
 	}
 })
 
@@ -71,7 +83,7 @@ const usersSlice = createSlice({
 			})
 			.addCase(getUsersList.rejected, (state, action) => {
 				state.status = 'error'
-				state.error = action.payload
+				state.error = action.error.message
 			})
 			// UPDATE STATUS
 			.addCase(updateUserStatus.pending, (state) => {
@@ -85,7 +97,7 @@ const usersSlice = createSlice({
 			})
 			.addCase(updateUserStatus.rejected, (state, action) => {
 				state.status = 'error'
-				state.error = action.payload
+				state.error = action.error.message
 			})
 			// SEARCH USERS
 			.addCase(searchUser.pending, (state) => {
@@ -98,7 +110,7 @@ const usersSlice = createSlice({
 			})
 			.addCase(searchUser.rejected, (state, action) => {
 				state.status = 'error'
-				state.error = action.payload
+				state.error = action.error.message
 			})
 			// NEXT
 			.addCase(getUsersNextList.pending, (state) => {
@@ -114,7 +126,7 @@ const usersSlice = createSlice({
 			})
 			.addCase(getUsersNextList.rejected, (state, action) => {
 				state.status = 'error'
-				state.error = action.payload
+				state.error = action.error.message
 			})
 	},
 })

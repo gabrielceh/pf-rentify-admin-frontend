@@ -1,12 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { login, logoutUser, updateImgDB } from '../../../services/authService'
+import { login, logoutUser, setInitialUserDB, updateImgDB } from '../../../services/authService'
 import { LSVariables } from '../../../utils/LSVariables'
 import { firebaseErrors } from '../../../utils/firebaseErrors'
+import { userToLS } from '../../../utils/userToLS'
 
 const initialState = {
 	user: {},
 	login: false,
 	status: 'idle',
+	token: null,
 	error: null,
 }
 
@@ -14,25 +16,25 @@ export const loginAdmin = createAsyncThunk('user/loginAdmin', async ({ email, pa
 	try {
 		return await login({ email, password })
 	} catch (error) {
-		console.log(error)
+		// console.log(error)
 		if (error.code.includes('auth/')) {
 			const errorMsg = firebaseErrors(error.code)
 			return Promise.reject(errorMsg)
 		}
-		return Promise.reject(error)
+		return Promise.reject(error.response.data.error)
 	}
 })
 
 export const logoutAdmin = createAsyncThunk('user/logoutAdmin', async () => {
 	try {
-		return await logoutUser()
+		await logoutUser()
 	} catch (error) {
-		console.log(error)
+		// console.log(error)
 		if (error.code.includes('auth/')) {
 			const errorMsg = firebaseErrors(error.code)
 			return Promise.reject(errorMsg)
 		}
-		return Promise.reject(error)
+		return Promise.reject(error.response.data.error)
 	}
 })
 
@@ -46,38 +48,50 @@ export const updateImageProfile = createAsyncThunk(
 				const errorMsg = firebaseErrors(error.code)
 				return Promise.reject(errorMsg)
 			}
-			return Promise.reject(error)
+			return Promise.reject(error.response.data.error)
 		}
 	}
 )
+
+export const setInitialUser = createAsyncThunk('user/setInitialUser', async ({ idUser, token }) => {
+	try {
+		return await setInitialUserDB({ idUser, token })
+	} catch (error) {
+		// console.log(error)
+		return Promise.reject(error.response.data.error)
+	}
+})
 
 const userSlice = createSlice({
 	name: 'user',
 	initialState,
 	reducers: {
 		setUser: (state, action) => {
-			state.user = action.payload
+			state.user = action.payload.user
+			state.token = action.payload.token
 			state.login = true
 			state.status = 'success'
 		},
-		resetUser: (state) => {
-			state.user = {}
-			state.login = false
-			state.status = 'idle'
-			state.error = null
-			localStorage.removeItem(LSVariables.authAdmin)
-		},
 		setImageProfile: (state, action) => {
 			state.user.image = action.payload
-			localStorage.setItem(LSVariables.authAdmin, JSON.stringify({ user: state.user, login: true }))
+			localStorage.setItem(
+				LSVariables.authAdmin,
+				JSON.stringify({ user: state.user, login: true, token: state.token })
+			)
 		},
 		setNameProfile: (state, action) => {
 			state.user.name = action.payload
-			localStorage.setItem(LSVariables.authAdmin, JSON.stringify({ user: state.user, login: true }))
+			localStorage.setItem(
+				LSVariables.authAdmin,
+				JSON.stringify({ user: state.user, login: true, token: state.token })
+			)
 		},
 		setPhoneProfile: (state, action) => {
 			state.user.phone = action.payload
-			localStorage.setItem(LSVariables.authAdmin, JSON.stringify({ user: state.user, login: true }))
+			localStorage.setItem(
+				LSVariables.authAdmin,
+				JSON.stringify({ user: state.user, login: true, token: state.token })
+			)
 		},
 	},
 	extraReducers: (builder) => {
@@ -88,13 +102,31 @@ const userSlice = createSlice({
 				state.error = null
 			})
 			.addCase(loginAdmin.fulfilled, (state, { payload }) => {
-				console.log('payload', payload)
-				state.user = payload
+				state.user = payload.user
 				state.login = true
 				state.status = 'success'
-				localStorage.setItem(LSVariables.authAdmin, JSON.stringify({ user: payload, login: true }))
+				state.token = payload.auth_token.token
+				const user = userToLS(payload.user, payload.auth_token.token)
+				localStorage.setItem(LSVariables.authAdmin, user)
 			})
 			.addCase(loginAdmin.rejected, (state, action) => {
+				state.status = 'error'
+				state.error = action.error.message
+			})
+			//INITIAL USER
+			.addCase(setInitialUser.pending, (state) => {
+				state.status = 'loading'
+				state.error = null
+			})
+			.addCase(setInitialUser.fulfilled, (state, { payload }) => {
+				state.user = payload.user
+				state.login = true
+				state.status = 'success'
+				state.token = payload.token
+				const user = userToLS(payload.user, payload.token)
+				localStorage.setItem(LSVariables.authAdmin, user)
+			})
+			.addCase(setInitialUser.rejected, (state, action) => {
 				state.status = 'error'
 				state.error = action.error.message
 			})
@@ -109,7 +141,7 @@ const userSlice = createSlice({
 				state.login = false
 				state.status = 'idle'
 				state.error = null
-				localStorage.removeItem(LSVariables.authAdmin)
+				state.token = null
 			})
 			.addCase(logoutAdmin.rejected, (state, action) => {
 				state.status = 'error'

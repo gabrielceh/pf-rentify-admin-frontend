@@ -14,7 +14,6 @@ export const selectTeamStatusOptions = [
 
 export const statusOptions = [
 	{ label: 'Active', value: 'active' },
-	{ label: 'Inactive', value: 'inactive' },
 	{ label: 'Banned', value: 'banned' },
 ]
 export const roleOptions = [

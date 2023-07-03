@@ -1,11 +1,36 @@
+import { useLocation } from 'react-router-dom'
 import { useModal } from '../../hooks/useModal'
 
 import AdminAside from './AdminAside'
 import AdminHeader from './AdminHeader'
+import { useDispatch, useSelector } from 'react-redux'
+import jwtDecode from 'jwt-decode'
+import { useContext, useEffect } from 'react'
+import { logoutAdmin } from '../../app/features/user/userSlice'
+import { ToastContext } from '../../context/ToastContext'
 
 /* eslint-disable react/prop-types */
 const AdminLayout = ({ children }) => {
 	const [isOpenSide, openSide, closeSide] = useModal()
+	const userState = useSelector((state) => state.user)
+	const dispatch = useDispatch()
+	const { pathname } = useLocation()
+	const { addToast } = useContext(ToastContext)
+
+	useEffect(() => {
+		if (userState.token) {
+			const decode = jwtDecode(userState.token)
+			if (decode.exp < Date.now() / 1000) {
+				dispatch(logoutAdmin())
+				addToast({
+					title: 'Expired Session',
+					description: 'Your session has expired',
+					type: 'warning',
+				})
+			}
+		}
+	}, [pathname])
+
 	return (
 		<div className='flex'>
 			<AdminAside isOpen={isOpenSide} closeModal={closeSide} />

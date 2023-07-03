@@ -9,8 +9,10 @@ import {
 	updatePassword,
 	updateProfile,
 } from 'firebase/auth'
-import { ADMIN_API, LOGIN_API } from '../utils/apiRoutes'
+import { ADMIN_API, LOGIN_API, LOGOUT_API, USERS_API } from '../utils/apiRoutes'
 import { getDownloadURL, ref, updateMetadata, uploadBytes } from 'firebase/storage'
+import { getTokenConfig } from '../utils/tokenConfig'
+import { LSVariables } from '../utils/LSVariables'
 
 export const registerUser = async ({ email, password }) => {
 	const { user } = await createUserWithEmailAndPassword(auth, email, password)
@@ -22,7 +24,10 @@ export const registerUser = async ({ email, password }) => {
 		uid: user.uid,
 	}
 
-	return newUser
+	const config = getTokenConfig()
+	const { data } = await axios.get(`${ADMIN_API}/create-admin`, newUser, config)
+
+	return data
 }
 export const login = async ({ email, password }) => {
 	const { user } = await signInWithEmailAndPassword(auth, email, password)
@@ -38,10 +43,14 @@ export const login = async ({ email, password }) => {
 
 export const logoutUser = async () => {
 	await signOut(auth)
-	return null
+	const config = getTokenConfig()
+	// console.log(config)
+	const res = await axios.get(LOGOUT_API, config)
+	localStorage.removeItem(LSVariables.authAdmin)
+	return res
 }
 
-export const saveAndGetImage = async (file, uid) => {
+export const saveAndGetImage = async (file) => {
 	const metadata = {
 		contentType: file.type,
 		name: auth.currentUser.uid,
@@ -65,18 +74,20 @@ export const updateImgDB = async ({ file, uid, idUser }) => {
 	await updateProfile(auth.currentUser, {
 		photoURL: image,
 	})
-
-	await axios.patch(`${ADMIN_API}/update-image`, { idUser, image })
+	const config = getTokenConfig()
+	await axios.patch(`${ADMIN_API}/update-image`, { idUser, image }, config)
 
 	return image
 }
 
 export const updateNameDB = async ({ name, idUser }) => {
+	// console.log(auth.currentUser)
 	await updateProfile(auth.currentUser, {
 		displayName: name,
 	})
-
-	await axios.patch(`${ADMIN_API}/update-name`, { idUser, name })
+	const config = getTokenConfig()
+	// console.log(config)
+	await axios.patch(`${ADMIN_API}/update-name`, { idUser, name }, config)
 
 	return name
 }
@@ -85,9 +96,9 @@ export const updatePhoneDB = async ({ phone, idUser }) => {
 	await updateProfile(auth.currentUser, {
 		phoneNumber: phone,
 	})
-
-	await axios.patch(`${ADMIN_API}/update-phone`, { idUser, phone })
-
+	const config = getTokenConfig()
+	const res = await axios.patch(`${ADMIN_API}/update-phone`, { idUser, phone }, config)
+	// console.log(res)
 	return phone
 }
 
@@ -101,4 +112,13 @@ export const changePassword = async ({ oldpassword, newpassword }) => {
 	await updatePassword(auth.currentUser, newpassword)
 
 	return true
+}
+
+export const setInitialUserDB = async ({ idUser, token }) => {
+	const config = getTokenConfig()
+	// console.log(config)
+	const { data } = await axios.get(`${USERS_API}/${idUser}`, config)
+	// console.log(data)
+
+	return { user: data, token: token }
 }

@@ -13,6 +13,7 @@ import { updateUserStatus } from '../../app/features/users/usersSlice'
 import EyeOpenIcon from '../icons/EyeOpenIcon'
 import { useNavigate } from 'react-router-dom'
 import { routesName } from '../../utils/routes_name'
+import { statusOptions } from '../../utils/selectsOptions'
 
 /* eslint-disable react/prop-types */
 const RowUser = ({ user }) => {
@@ -21,12 +22,6 @@ const RowUser = ({ user }) => {
 	const [isOpenEditModal, openEditModal, closeEditModal] = useModal()
 	const { addToast } = useContext(ToastContext)
 	const navigate = useNavigate()
-
-	const statusOptions = [
-		{ label: 'Active', value: 'active' },
-		{ label: 'Inactive', value: 'inactive' },
-		{ label: 'Banned', value: 'banned' },
-	]
 
 	useEffect(() => {
 		isImgValid(user.image, setImgValid)

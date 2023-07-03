@@ -1,12 +1,13 @@
-import AppRouter from './routes/AppRouter'
 import { useContext, useEffect } from 'react'
 import { ToastContext } from './context/ToastContext'
 import { LSVariables } from './utils/LSVariables'
-import { useDispatch } from 'react-redux'
-import { resetUser, setUser } from './app/features/user/userSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { logoutAdmin, setInitialUser } from './app/features/user/userSlice'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './firebase.config'
+import AppRouter from './routes/AppRouter'
 import Toast from './components/Toast/Toast'
+import Loader from './components/Loader'
 
 const userAuth = localStorage.getItem(LSVariables.authAdmin)
 	? JSON.parse(localStorage.getItem(LSVariables.authAdmin))
@@ -14,16 +15,17 @@ const userAuth = localStorage.getItem(LSVariables.authAdmin)
 
 function App() {
 	const { toastList, deleteToast } = useContext(ToastContext)
+	const userState = useSelector((state) => state.user)
 	const dispatch = useDispatch()
 
 	useEffect(() => {
 		if (userAuth.login) {
-			dispatch(setUser(userAuth.user))
+			dispatch(setInitialUser({ idUser: userAuth.user.idUser, token: userAuth.token }))
 		}
+
 		const unsuscribe = onAuthStateChanged(auth, (user) => {
 			if (!user) {
-				localStorage.removeItem(LSVariables.authAdmin)
-				dispatch(resetUser())
+				dispatch(logoutAdmin())
 			}
 		})
 		return () => unsuscribe()
@@ -31,9 +33,18 @@ function App() {
 
 	return (
 		<div className='bg-body_light text-text_light dark:bg-body_dark dark:text-text_dark min-h-screen transition'>
-			<AppRouter />
-			{toastList.length > 0 && (
-				<Toast toastList={toastList} deleteToast={deleteToast} position='top-center' />
+			{userState.status === 'loading' ? (
+				<div className='fixed min-h-screen w-full grid place-content-center'>
+					<Loader className='w-8 h-8 animate-spin' />
+				</div>
+			) : (
+				<>
+					<AppRouter />
+
+					{toastList.length > 0 && (
+						<Toast toastList={toastList} deleteToast={deleteToast} position='top-center' />
+					)}
+				</>
 			)}
 		</div>
 	)

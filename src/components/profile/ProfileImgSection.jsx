@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { isImgValid } from '../../utils/isImgValid'
 import { updateImgDB } from '../../services/authService'
 import { setImageProfile } from '../../app/features/user/userSlice'
@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 import imgNotFound from '../../assets/image/image-not-found.jpg'
 import ProfileFormEdit from './ProfileFormEdit'
 import BtnEditProfile from './BtnEditProfile'
+import { ToastContext } from '../../context/ToastContext'
 
 const ProfileImgSection = ({ user }) => {
 	const [imgValid, setImgValid] = useState(false)
@@ -15,6 +16,7 @@ const ProfileImgSection = ({ user }) => {
 	const [statusSend, setStatusSend] = useState('idle')
 	const [errorSend, setErrorSend] = useState(null)
 	const dispatch = useDispatch()
+	const { addToast } = useContext(ToastContext)
 
 	useEffect(() => {
 		isImgValid(user.image, setImgValid)
@@ -22,11 +24,20 @@ const ProfileImgSection = ({ user }) => {
 
 	useEffect(() => {
 		if (statusSend === 'success') {
-			console.log('imagen subida')
+			addToast({
+				title: 'Update',
+				description: `Your photo was updated`,
+				type: 'success',
+			})
 			setShowForm(false)
 		}
 		if (statusSend === 'error') {
-			console.log(errorSend)
+			// console.log(errorSend)
+			addToast({
+				title: 'Error',
+				description: errorSend,
+				type: 'danger',
+			})
 		}
 	}, [statusSend])
 
@@ -41,7 +52,7 @@ const ProfileImgSection = ({ user }) => {
 			dispatch(setImageProfile(urlimg))
 			setStatusSend('success')
 		} catch (error) {
-			console.log(error)
+			// console.log(error)
 			setStatusSend('error')
 			if (error.code.includes('auth/') || error.code.includes('storage/')) {
 				const errorMsg = firebaseErrors(error.code)

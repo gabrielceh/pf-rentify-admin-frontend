@@ -10,6 +10,7 @@ import BtnRefreshData from '../../components/BtnRefreshData'
 import UserFormFilter from '../../components/UserFormFilter'
 import { statusOrderOptions } from '../../utils/selectsOptions'
 import { ADMIN_API } from '../../utils/apiRoutes'
+import { getTokenConfig } from '../../utils/tokenConfig'
 
 const UserOrdersDetails = () => {
 	const { id } = useParams()
@@ -33,7 +34,7 @@ const UserOrdersDetails = () => {
 			setData(data)
 			setStatus({ ...status, orders: 'success' })
 		} catch (error) {
-			console.log(error)
+			// console.log(error)
 			setErrors(error)
 			setStatus({ ...status, orders: 'error' })
 		}
@@ -75,7 +76,8 @@ const UserOrdersDetails = () => {
 	const getMoreOrders = async () => {
 		setStatus({ ...status, more: 'loading' })
 		try {
-			const { data } = await axios.get(orders.next)
+			const config = getTokenConfig()
+			const { data } = await axios.get(orders.next, config)
 			setOrders({
 				...orders,
 				next: data.next,
@@ -83,8 +85,9 @@ const UserOrdersDetails = () => {
 			})
 			setStatus({ ...status, more: 'success' })
 		} catch (error) {
+			// console.log(error)
 			setStatus({ ...status, more: 'more' })
-			setErrors(errors.response.data.error)
+			setErrors(error.response.data.error)
 		}
 	}
 
@@ -151,7 +154,8 @@ const UserOrdersDetails = () => {
 			{orders.next && (
 				<button
 					onClick={getMoreOrders}
-					className='py-2 px-6 bg-medium_purple hover:bg-dark_purple text-white rounded-md transition'>
+					className='py-2 px-6 bg-medium_purple hover:bg-dark_purple text-white rounded-md transition disabled:cursor-not-allowed'
+					disabled={status.more === 'loading'}>
 					{status.more === 'loading' ? (
 						<Loader className='w-4 h-4 stroke-light_purple animate-spin inline' />
 					) : (

@@ -19,6 +19,12 @@ const Users = () => {
 		getAllUsers(`${USERS_API}/all`)
 	}, [])
 
+	useEffect(() => {
+		if (usersState.status === 'error') {
+			// console.log(usersState.error)
+		}
+	}, [usersState.status])
+
 	const getAllUsers = (endpoint) => {
 		dispatch(getUsersList(endpoint))
 	}
