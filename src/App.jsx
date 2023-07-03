@@ -25,7 +25,9 @@ function App() {
 
 		const unsuscribe = onAuthStateChanged(auth, (user) => {
 			if (!user) {
-				dispatch(logoutAdmin())
+				if (userAuth.token) {
+					dispatch(logoutAdmin())
+				}
 			}
 		})
 		return () => unsuscribe()
