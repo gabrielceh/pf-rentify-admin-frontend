@@ -26,3 +26,9 @@ export const statusOrderOptions = [
 	{ label: 'Pending', value: '?status=pending' },
 	{ label: 'Rejected', value: '?status=rejected' },
 ]
+
+export const statusProductOptions = [
+	{ label: 'Active', value: 'active' },
+	{ label: 'Inactive', value: 'inactive' },
+	{ label: 'Deleted', value: 'deleted' },
+]

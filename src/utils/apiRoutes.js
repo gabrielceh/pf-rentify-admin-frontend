@@ -9,3 +9,5 @@ export const REPORTS_API = `${API_URL}/admin/statistics`
 export const ADMIN_API = `${API_URL}/admin`
 
 export const USERS_API = `${API_URL}/user`
+
+export const PRODUCTS_API = `${API_URL}/products`

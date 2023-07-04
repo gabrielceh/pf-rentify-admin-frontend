@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react'
 import { ToastContext } from './context/ToastContext'
 import { LSVariables } from './utils/LSVariables'
 import { useDispatch, useSelector } from 'react-redux'
-import { logoutAdmin, setInitialUser } from './app/features/user/userSlice'
+import { setInitialUser } from './app/features/user/userSlice'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './firebase.config'
 import AppRouter from './routes/AppRouter'
@@ -23,13 +23,7 @@ function App() {
 			dispatch(setInitialUser({ idUser: userAuth.user.idUser, token: userAuth.token }))
 		}
 
-		const unsuscribe = onAuthStateChanged(auth, (user) => {
-			if (!user) {
-				if (userAuth.token) {
-					dispatch(logoutAdmin())
-				}
-			}
-		})
+		const unsuscribe = onAuthStateChanged(auth, () => {})
 		return () => unsuscribe()
 	}, [])
 

@@ -92,7 +92,6 @@ const usersSlice = createSlice({
 			.addCase(updateUserStatus.fulfilled, (state, action) => {
 				state.status = 'success'
 				const userFound = state.users.find((user) => user.idUser === action.payload.idUser)
-				userFound.idUser = action.payload.idUser
 				userFound.status = action.payload.status
 			})
 			.addCase(updateUserStatus.rejected, (state, action) => {
