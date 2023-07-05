@@ -27,12 +27,10 @@ const RowProduct = ({ product }) => {
 		const text = `
 ID: ${product.idProd},
 Name: ${product.name},
-description: ${product.description},
-Price: ${product.price} ${product.country.currency.code}
-Role: ${product.role},
-statusPub: ${product.statusPub},
+Description: ${product.description},
+StatusPub: ${product.statusPub},
 Image: ${product.image},
-country:${product.country.name},
+ID Country: ${product.idCountry},
 Region:${product.state},
 City:${product.location},
 Created_at: ${date},
