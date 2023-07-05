@@ -18,7 +18,6 @@ export const getReport = createAsyncThunk('report/getReport', async () => {
 	try {
 		return await getReportsFromDB()
 	} catch (error) {
-		// console.log(error)
 		return Promise.reject(error)
 	}
 })

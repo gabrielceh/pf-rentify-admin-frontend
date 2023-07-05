@@ -44,7 +44,6 @@ export const login = async ({ email, password }) => {
 export const logoutUser = async () => {
 	await signOut(auth)
 	const config = getTokenConfig()
-	// console.log(config)
 	const res = await axios.get(LOGOUT_API, config)
 	localStorage.removeItem(LSVariables.authAdmin)
 	return res
@@ -81,12 +80,10 @@ export const updateImgDB = async ({ file, uid, idUser }) => {
 }
 
 export const updateNameDB = async ({ name, idUser }) => {
-	// console.log(auth.currentUser)
 	await updateProfile(auth.currentUser, {
 		displayName: name,
 	})
 	const config = getTokenConfig()
-	// console.log(config)
 	await axios.patch(`${ADMIN_API}/update-name`, { idUser, name }, config)
 
 	return name
@@ -97,8 +94,7 @@ export const updatePhoneDB = async ({ phone, idUser }) => {
 		phoneNumber: phone,
 	})
 	const config = getTokenConfig()
-	const res = await axios.patch(`${ADMIN_API}/update-phone`, { idUser, phone }, config)
-	// console.log(res)
+	await axios.patch(`${ADMIN_API}/update-phone`, { idUser, phone }, config)
 	return phone
 }
 
@@ -116,9 +112,7 @@ export const changePassword = async ({ oldpassword, newpassword }) => {
 
 export const setInitialUserDB = async ({ idUser, token }) => {
 	const config = getTokenConfig()
-	// console.log(config)
 	const { data } = await axios.get(`${USERS_API}/${idUser}`, config)
-	// console.log(data)
 
 	return { user: data, token: token }
 }

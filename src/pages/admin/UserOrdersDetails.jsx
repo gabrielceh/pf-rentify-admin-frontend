@@ -34,7 +34,6 @@ const UserOrdersDetails = () => {
 			setData(data)
 			setStatus({ ...status, orders: 'success' })
 		} catch (error) {
-			// console.log(error)
 			setErrors(error)
 			setStatus({ ...status, orders: 'error' })
 		}
@@ -85,7 +84,6 @@ const UserOrdersDetails = () => {
 			})
 			setStatus({ ...status, more: 'success' })
 		} catch (error) {
-			// console.log(error)
 			setStatus({ ...status, more: 'more' })
 			setErrors(error.response.data.error)
 		}

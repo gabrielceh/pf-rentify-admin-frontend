@@ -18,7 +18,6 @@ export const getUsersProducts = createAsyncThunk('usersProducts/getUsersProducts
 	try {
 		return await getProductsListDB(url)
 	} catch (error) {
-		console.log(error)
 		return Promise.reject(error.response.data.error)
 	}
 })
@@ -44,7 +43,6 @@ export const updateProductStatus = createAsyncThunk(
 			await updateStatusProductDB({ idProd, statusPub })
 			return { idProd, statusPub }
 		} catch (error) {
-			console.log(error)
 			if (error.response) {
 				return Promise.reject(error.response.data.error)
 			}

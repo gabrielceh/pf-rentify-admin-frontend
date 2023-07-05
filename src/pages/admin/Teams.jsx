@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { getTeamList, getTeamNextList, searchTeam } from '../../app/features/team/teamSlice'
 import { ADMIN_API } from '../../utils/apiRoutes'
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { selectTeamStatusOptions } from '../../utils/selectsOptions'
 import { useModal } from '../../hooks/useModal'
 import Loader from '../../components/Loader'
@@ -13,12 +13,14 @@ import Search from '../../components/Search'
 import SectionDescription from '../../components/SectionDescription'
 import TitleSection from '../../components/TitleSection'
 import CreateUserForm from '../../components/team/CreateUserForm'
+import { ToastContext } from '../../context/ToastContext'
 
 const Teams = () => {
 	const dispatch = useDispatch()
 	const teamState = useSelector((state) => state.team)
 	const userState = useSelector((state) => state.user)
 	const [isOpenCreate, openCreate, closeCreate] = useModal()
+	const { addToast } = useContext(ToastContext)
 
 	useEffect(() => {
 		getAllTeam(`${ADMIN_API}/admins-sudo`)
@@ -26,7 +28,11 @@ const Teams = () => {
 
 	useEffect(() => {
 		if (teamState.status === 'error') {
-			console.log(teamState.error)
+			addToast({
+				title: 'Error',
+				description: 'Somethin happened with product',
+				type: 'danger',
+			})
 		}
 	}, [teamState.status])
 

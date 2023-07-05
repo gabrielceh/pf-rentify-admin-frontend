@@ -32,7 +32,6 @@ const ProfileImgSection = ({ user }) => {
 			setShowForm(false)
 		}
 		if (statusSend === 'error') {
-			// console.log(errorSend)
 			addToast({
 				title: 'Error',
 				description: errorSend,
@@ -52,7 +51,6 @@ const ProfileImgSection = ({ user }) => {
 			dispatch(setImageProfile(urlimg))
 			setStatusSend('success')
 		} catch (error) {
-			// console.log(error)
 			setStatusSend('error')
 			if (error.code.includes('auth/') || error.code.includes('storage/')) {
 				const errorMsg = firebaseErrors(error.code)

@@ -16,7 +16,6 @@ export const loginAdmin = createAsyncThunk('user/loginAdmin', async ({ email, pa
 	try {
 		return await login({ email, password })
 	} catch (error) {
-		// console.log(error)
 		if (error.code.includes('auth/')) {
 			const errorMsg = firebaseErrors(error.code)
 			return Promise.reject(errorMsg)
@@ -29,7 +28,6 @@ export const logoutAdmin = createAsyncThunk('user/logoutAdmin', async () => {
 	try {
 		await logoutUser()
 	} catch (error) {
-		// console.log(error)
 		if (error.code.includes('auth/')) {
 			const errorMsg = firebaseErrors(error.code)
 			return Promise.reject(errorMsg)
@@ -57,7 +55,6 @@ export const setInitialUser = createAsyncThunk('user/setInitialUser', async ({ i
 	try {
 		return await setInitialUserDB({ idUser, token })
 	} catch (error) {
-		// console.log(error)
 		return Promise.reject(error.response.data.error)
 	}
 })

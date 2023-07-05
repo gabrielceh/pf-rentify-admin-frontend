@@ -5,7 +5,6 @@ import { getTokenConfig } from '../utils/tokenConfig'
 export const getProductsListDB = async (url) => {
 	const config = getTokenConfig()
 	const { data } = await axios.get(url, config)
-	console.log(data)
 	return data
 }
 
@@ -25,6 +24,5 @@ export const getUserProductByIdDB = async (idUser) => {
 
 export const updateStatusProductDB = async ({ idProd, statusPub }) => {
 	const config = getTokenConfig()
-	console.log(idProd)
 	await axios.put(`${PRODUCTS_API}/update-status`, { idProd, statusPub }, config)
 }

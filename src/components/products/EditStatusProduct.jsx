@@ -8,7 +8,6 @@ const EditStatusProduct = ({ idProd, dataToEdit, status, options, updateFunc }) 
 	const dispatch = useDispatch()
 
 	const onsubmit = (data) => {
-		console.log(data)
 		if (data[dataToEdit]) {
 			dispatch(updateFunc({ ...data, idProd }))
 		}

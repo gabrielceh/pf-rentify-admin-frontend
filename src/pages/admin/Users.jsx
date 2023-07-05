@@ -21,7 +21,7 @@ const Users = () => {
 
 	useEffect(() => {
 		if (usersState.status === 'error') {
-			// console.log(usersState.error)
+			console.log(usersState.status.error)
 		}
 	}, [usersState.status])
 

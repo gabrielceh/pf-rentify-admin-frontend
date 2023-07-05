@@ -31,7 +31,6 @@ const ProfileSectionEdit = ({
 			setShowForm(false)
 		}
 		if (statusSend === 'error') {
-			// console.log(errorSend)
 			addToast({
 				title: 'Error',
 				description: errorSend,
@@ -47,13 +46,10 @@ const ProfileSectionEdit = ({
 	const submit = async (data) => {
 		setStatusSend('loading')
 		try {
-			// console.log(data)
 			const name = await funcDB(data)
-			// console.log(name)
 			dispatch(funcStateField(name))
 			setStatusSend('success')
 		} catch (error) {
-			// console.log(error)
 			setStatusSend('error')
 			if (error.code?.includes('auth/') || error.code?.includes('storage/')) {
 				const errorMsg = firebaseErrors(error.code)
