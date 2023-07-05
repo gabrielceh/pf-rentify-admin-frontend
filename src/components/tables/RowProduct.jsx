@@ -40,7 +40,7 @@ Created_at: ${date},
 		if (copied) {
 			addToast({
 				title: 'Copied',
-				description: 'User copied',
+				description: 'Product copied',
 				type: 'success',
 			})
 		} else {

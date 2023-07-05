@@ -38,7 +38,12 @@ function App() {
 					<AppRouter />
 
 					{toastList.length > 0 && (
-						<Toast toastList={toastList} deleteToast={deleteToast} position='top-center' />
+						<Toast
+							toastList={toastList}
+							deleteToast={deleteToast}
+							position='top-center'
+							autoDeleteTime={2000}
+						/>
 					)}
 				</>
 			)}
