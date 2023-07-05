@@ -7,6 +7,7 @@ import SectionDescription from '../../components/SectionDescription'
 import Search from '../../components/Search'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+	getProductNextList,
 	getUsersProducts,
 	searchUserProducts,
 } from '../../app/features/usersProducts/userProductsSlice'
@@ -28,6 +29,10 @@ const Products = () => {
 		dispatch(getUsersProducts(`${PRODUCTS_API}/all`))
 	}
 
+	const handleNext = () => {
+		dispatch(getProductNextList(productsState.next))
+	}
+
 	return (
 		<div>
 			<TitleSection title='Users products' />
@@ -43,6 +48,18 @@ const Products = () => {
 				</div>
 			</section>
 			{productsState.status === 'success' && <TableProducts products={productsState.products} />}
+
+			{productsState.next && productsState.status === 'success' ? (
+				<div className='mt-6'>
+					<button
+						className='bg-dark_purple hover:bg-medium_purple text-white px-3 py-1 rounded-md'
+						onClick={handleNext}>
+						More
+					</button>
+				</div>
+			) : (
+				''
+			)}
 		</div>
 	)
 }

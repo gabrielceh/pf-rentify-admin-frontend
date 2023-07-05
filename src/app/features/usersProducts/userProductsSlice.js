@@ -53,6 +53,20 @@ export const updateProductStatus = createAsyncThunk(
 	}
 )
 
+export const getProductNextList = createAsyncThunk(
+	'usersProducts/getProductNextList',
+	async (url) => {
+		try {
+			return await getProductsListDB(url)
+		} catch (error) {
+			if (error.response) {
+				return Promise.reject(error.response.data.error)
+			}
+			return Promise.reject(error.message)
+		}
+	}
+)
+
 const userProductsSlice = createSlice({
 	name: 'userProducts',
 	initialState,
@@ -95,6 +109,22 @@ const userProductsSlice = createSlice({
 				prodFound.statusPub = action.payload.statusPub
 			})
 			.addCase(updateProductStatus.rejected, (state, action) => {
+				state.status = 'error'
+				state.error = action.error.message
+			})
+			// NEXT
+			.addCase(getProductNextList.pending, (state) => {
+				state.status = 'loading'
+			})
+			.addCase(getProductNextList.fulfilled, (state, action) => {
+				state.status = 'success'
+				state.products = [...state.products, ...action.payload.results] || [
+					...state.products,
+					...action.payload,
+				]
+				state.next = action.payload.next || null
+			})
+			.addCase(getProductNextList.rejected, (state, action) => {
 				state.status = 'error'
 				state.error = action.error.message
 			})
