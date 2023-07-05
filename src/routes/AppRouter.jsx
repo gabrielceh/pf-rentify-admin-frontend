@@ -12,6 +12,7 @@ import Reports from '../pages/admin/Reports'
 import UserOrdersDetails from '../pages/admin/UserOrdersDetails'
 import ChangePassword from '../pages/admin/ChangePassword'
 import Products from '../pages/admin/Products'
+import Page404 from '../pages/Page404'
 
 const AppRouter = () => {
 	return (
@@ -31,6 +32,8 @@ const AppRouter = () => {
 				<Route path={`${routesName.admin.usersOrders}/:id`} element={<UserOrdersDetails />} />
 				<Route path={routesName.admin.changePassword} element={<ChangePassword />} />
 			</Route>
+
+			<Route path='*' element={<Page404 />} />
 		</Routes>
 	)
 }

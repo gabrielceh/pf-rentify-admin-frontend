@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import { getProductsListDB } from '../../services/usersProductsService'
+import { useEffect } from 'react'
 import { PRODUCTS_API } from '../../utils/apiRoutes'
 import TableProducts from '../../components/tables/TableProducts'
 import TitleSection from '../../components/TitleSection'
@@ -12,6 +11,7 @@ import {
 	searchUserProducts,
 } from '../../app/features/usersProducts/userProductsSlice'
 import BtnRefreshData from '../../components/BtnRefreshData'
+import Loader from '../../components/Loader'
 
 const Products = () => {
 	const productsState = useSelector((state) => state.usersProducts)
@@ -37,7 +37,7 @@ const Products = () => {
 		<div>
 			<TitleSection title='Users products' />
 			<section className='mb-16 w-full flex flex-col md:flex-row md:justify-between md:items-center gap-y-12'>
-				<SectionDescription description='List of the Rent-ify team' />
+				<SectionDescription description='List of products' />
 				<Search searchFunction={searchUserProducts} />
 			</section>
 
@@ -47,6 +47,13 @@ const Products = () => {
 					{/* <UserFormFilter options={selectTeamStatusOptions} onchange={filterData} /> */}
 				</div>
 			</section>
+
+			{productsState.status === 'loading' && (
+				<div className='w-full h-[700px] grid place-content-center'>
+					<Loader className='w-16 h-16 animate-spin' />
+				</div>
+			)}
+
 			{productsState.status === 'success' && <TableProducts products={productsState.products} />}
 
 			{productsState.next && productsState.status === 'success' ? (
