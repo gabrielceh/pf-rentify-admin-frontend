@@ -62,7 +62,7 @@ const ViewProductDetail = ({ idProd, onclose }) => {
 				</div>
 			)}
 
-			{error && <p className='text-danger text-xl'> {error}</p>}
+			{status === 'error' && <p className='text-danger text-xl'>{error}</p>}
 
 			{status === 'success' && (
 				<div className='w-10/12 mx-auto flex items-center flex-col gap-3'>
